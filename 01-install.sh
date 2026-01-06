@@ -2,7 +2,7 @@
 USERID=$(id -u)
 echo $USERID
 if [ $USERID -ne 0 ]; then
-    echo "ERROR please take rrot access"
+    echo "ERROR please take root access"
     exit 1
 fi
 anand(){
