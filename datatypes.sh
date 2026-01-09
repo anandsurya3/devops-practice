@@ -1,5 +1,7 @@
 #!/bin/bash
 
-SURYA=("surya is good boy" "surya is handsome person" "surya is always mine about" "surya is great movie actor")
+SURYA=("Connecting: The first phase involves actively listening to understand the person's situation and build a relationship, ensuring an adult-to-adult interaction."
+"Sharing Information: The second phase focuses on working through immediate crises or sharing necessary information, potentially developing an emergency plan if needed"
+"Agreeing on Next Steps: The final phase involves collaborative decision-making to agree on the next steps and potential longer-term support, ensuring the action plan reflects what is truly important to the individua")
 
-echo "about surya : ${SURYA[1]}"
+echo "${SURYA[1]
