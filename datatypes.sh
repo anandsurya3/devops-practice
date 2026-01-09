@@ -6,7 +6,7 @@ echo "${SURYA[2]}"
 
 echo "pls enter the number"
 read number
-if [ ($number % 2) -ne 0 ]; then
+if [ $(number % 2) -ne 0 ]; then
     echo "given $number is odd"
 else
     echo "given $number is even"
