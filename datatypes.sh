@@ -1,5 +1,5 @@
 #!/bin/bash
 
-SURYA=("wwwmwmwnwjwjwwjjjjdf" "dvhbvjyvgsfyvrnkvhvfuiv fhuivhfkmvhiu huvhbgfhvfgukhuvhfviuf" "bhrubsuynvkhrunrhikvmhrvnkihrvuigh ybhgvgkuvhfvg")
+SURYA=("surys is good" "andnd is fan of surys" "arjunwhat the fuck and somthing")
 
-echo "${SURYA[1]}
+echo "${SURYA[2]}
