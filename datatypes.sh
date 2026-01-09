@@ -2,4 +2,4 @@
 
 SURYA=("surys is good" "andnd is fan of surys" "arjunwhat the fuck and somthing")
 
-echo "${SURYA[2]}
+echo "${SURYA[2]}"
