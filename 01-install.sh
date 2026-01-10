@@ -1,21 +1,32 @@
 #!/bin/bash
-USERID=$(id -u)
-echo $USERID
-if [ $USERID -ne 0 ]; then
-    echo "ERROR please take root access"
+userid=$(id -u)
+echo $userid
+if [ $userid -ne 0 ]; then
+    echo "ERROR please take root acces"
     exit 1
 fi
-anand(){
-    if [ $1 -ne 0 ]; then 
-        echo "installin $2 failed"
+dnf list installed mysql
+if [ $? -ne 0 ]; then
+    dnf install mysql -y
+    if [ $? -ne 0 ]; then
+        echo "installing mysql is failed"
         exit 1
     else
-        echo "installing $2 success"
+        echo "installing mysql is success"
     fi
-}
-dnf install mysql -y
-anand $? "mysql"
-dnf install nginx -y
-anand $? "nginx"
-dnf install java -y
-anand $? "java"
+else
+    echo "mysql already installed....SKIPPING"
+fi
+dnf list installed nginx
+if [ $? -ne 0 ]; then
+    dnf install nginx -y
+    if [ $? -ne 0 ]; then
+        echo "installing mysql is failed"
+        exit 1
+    else
+        echo "insatlling nginx is success"
+    fi
+else
+    echo "nginx already installed....SKIPPING"
+fi
+  
