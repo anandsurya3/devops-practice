@@ -14,8 +14,6 @@ funky(){
         exit 1
     elif
         echo "deleting $2 is success"
-    else
-        echo "already deleted"
     fi
 }
 dnf remove mysql -y &>>$log_file
