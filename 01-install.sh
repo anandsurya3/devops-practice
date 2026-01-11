@@ -5,7 +5,7 @@ if [ $userid -ne 0 ]; then
     echo -e "\e[32m ERROR please take root acces \e[0m"
     exit 1
 fi
-dnf installed mysql
+dnf list installed mysql
 if [ $? -ne 0 ]; then
     dnf install mysql -y
     if [ $? -ne 0 ]; then
@@ -17,7 +17,7 @@ if [ $? -ne 0 ]; then
 else
     echo -e "mysql already installed....\e[33m SKIPPING \e[0m"
 fi
-dnf installed nginx
+dnf list installed nginx
 if [ $? -ne 0 ]; then
     dnf install nginx -y
     if [ $? -ne 0 ]; then
