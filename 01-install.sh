@@ -16,14 +16,14 @@ checking(){
         echo "installing $2 is success"
     fi
 }
-dnf list installed mysql &>>$log_file
+dnf list installed mysql
 if [ $? -ne 0 ]; then
     dnf install mysql -y &>>$log_file
     checking $? "mysql"
 else 
     echo "mysql is already installed....SKIPPING"
 fi
-dnf list installed nginx &>>$log_file
+dnf list installed nginx
 if [ $? -ne 0 ]; then
     dnf install nginx -y &>>$log_file
     checking $? "nginx"
