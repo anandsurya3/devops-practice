@@ -6,9 +6,9 @@ if [ $userid -ne 0 ]; then
     exit 1
 fi
 dnf list installed mysql
-if [ $? -ne 0 ]; then
+if [ $? -eq 0 ]; then
     dnf install mysql -y
-    if [ $? -ne 0 ]; then
+    if [ $? -eq 0 ]; then
         echo "installing mysql is failed"
         exit 1
     else
@@ -18,9 +18,9 @@ else
     echo -e "mysql already installed....\e[33m SKIPPING \e[0m"
 fi
 dnf list installed nginx
-if [ $? -ne 0 ]; then
+if [ $? -eq 0 ]; then
     dnf install nginx -y
-    if [ $? -ne 0 ]; then
+    if [ $? -eq 0 ]; then
         echo "installing mysql is failed"
         exit 1
     else
