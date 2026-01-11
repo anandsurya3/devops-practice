@@ -6,7 +6,7 @@ if [ $userid -ne 0 ]; then
     exit 1
 fi
 log_folder="/var/log/shell-practice"
-script_name=$( $0 | cut -d "." -f1 )
+script_name=$( echo $0 | cut -d "." -f1 )
 log_file=$log_folder/$script_name.log
 mkdir -p $log_folder 
 validate(){
@@ -31,4 +31,3 @@ if [ $? -ne 0 ]; then
 else
     echo -e "nginx is already installed....\e[33m SKIPPING \e[0m"
 fi
-echo $0
