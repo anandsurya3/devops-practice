@@ -2,7 +2,7 @@
 userid=$(id -u)
 echo $userid
 if [ $userid -ne 0 ]; then
-    echo "ERROR please take root acces"
+    echo -e "\e[34m ERROR please take root acces \e[0m"
     exit 1
 fi
 dnf installed mysql
