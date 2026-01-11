@@ -12,7 +12,7 @@ funky(){
     if [ $1 -ne 0 ]; then
         echo "deleting $2 is failed"
         exit 1
-    elif
+    else
         echo "deleting $2 is success"
     fi
 }
