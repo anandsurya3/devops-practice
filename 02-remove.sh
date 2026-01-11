@@ -4,8 +4,6 @@ echo $userid
 if [ $userid -ne 0 ]; then
     echo "ERROR RA BOKKA please take root access"
     exit 1
-
-}
 dnf remove mysql -y
 
 dnf remove nginx -y
