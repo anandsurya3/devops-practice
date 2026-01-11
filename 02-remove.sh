@@ -12,8 +12,10 @@ funky(){
     if [ $1 -ne 0 ]; then
         echo "deleting $2 is failed"
         exit 1
-    else
+    elif
         echo "deleting $2 is success"
+    else
+        echo "already deleted"
     fi
 }
 dnf remove mysql -y &>>$log_file
