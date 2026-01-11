@@ -18,12 +18,12 @@ if [ $? -ne 0 ]; then
     dnf install mysql -y
     validate $? "mysql"
 else
-    echo -e " mysql is already installed....\e[31m SKIPPING \e[0m"
+    echo -e " mysql is already installed....\e[32m SKIPPING \e[0m"
 fi
 dnf list installed nginx
 if [ $? -ne 0 ]; then
     dnf install nginx -y
     validate $? "nginx"
 else
-    echo -e "nginx is already installed....\e[31m SKIPPING \e[0m"
+    echo -e "nginx is already installed....\e[32m SKIPPING \e[0m"
 fi
