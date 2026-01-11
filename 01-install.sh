@@ -27,3 +27,4 @@ if [ $? -ne 0 ]; then
 else
     echo -e "nginx is already installed....\e[33m SKIPPING \e[0m"
 fi
+echo $0
