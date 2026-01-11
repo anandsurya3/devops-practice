@@ -15,7 +15,7 @@ if [ $? -ne 0 ]; then
         echo "installing mysql is success"
     fi
 else
-    echo "mysql already installed....SKIPPING"
+    echo -e "mysql already installed....\e[33m SKIPPING \e[0m"
 fi
 dnf installed nginx
 if [ $? -ne 0 ]; then
@@ -27,7 +27,7 @@ if [ $? -ne 0 ]; then
         echo "insatlling nginx is success"
     fi
 else
-    echo "nginx already installed....SKIPPING"
+    echo -e "nginx already installed....\e[33m SKIPPING \e[0m"
 fi
   
   echo $0
