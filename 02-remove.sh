@@ -16,4 +16,3 @@ if [ $(($number % 2)) -ne 0 ]; then
 else
     echo "given number is even"
 fi
-
