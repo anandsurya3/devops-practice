@@ -30,3 +30,4 @@ else
     echo "nginx already installed....SKIPPING"
 fi
   
+  echo $0
