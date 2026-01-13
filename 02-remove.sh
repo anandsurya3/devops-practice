@@ -13,11 +13,18 @@ funky(){
         echo "deleting $2 is success"
     fi
 }
-
-    dnf remove mysql
+rpm -q mysql
+if [ $? -eq 0 ]; then
+    dnf remove mysql &>>$log_file
     funky $? "mysql"
+else
+    echo "mysql package is already deleted"
+fi 
 
-
-
-    dnf remove nginx
+rpm -q nginx
+if [ $? -eq 0 ]; then
+    dnf remove nginx &>>$log_file
     funky $? "nginx"
+else
+    echo "nginx package is already deleted"
+fi
