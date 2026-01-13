@@ -26,7 +26,7 @@ fi
 
 rpm -q nginx &>>$log_file
 if [ $? -eq 0 ]; then
-    dnf remove nginx-y &>>$log_file
+    dnf remove nginx -y &>>$log_file
     funky $? "nginx"
 else
     echo "nginx package is already deleted"
