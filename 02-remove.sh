@@ -18,7 +18,7 @@ funky(){
 }
 rpm -q mysql &>>$log_file
 if [ $? -eq 0 ]; then
-    dnf remove mysql &>>$log_file
+    dnf remove mysql -y &>>$log_file
     funky $? "mysql"
 else
     echo "mysql package is already deleted"
@@ -26,7 +26,7 @@ fi
 
 rpm -q nginx &>>$log_file
 if [ $? -eq 0 ]; then
-    dnf remove nginx &>>$log_file
+    dnf remove nginx-y &>>$log_file
 else
     echo "nginx package is already deleted"
 fi
