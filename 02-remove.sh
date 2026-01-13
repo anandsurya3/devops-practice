@@ -6,7 +6,7 @@ if [ $userid -ne 0 ]; then
 fi
 log_folder="/var/log/deleted"
 file_name=$( echo $0 | cut -d "." -f1 )
-log_file=$log_folder/$file_name
+log_file="$log_folder/$file_name.log"
 mkdir -p $log_folder
 funky(){
     if [ $1 -ne 0 ]; then

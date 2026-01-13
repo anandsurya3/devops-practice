@@ -6,7 +6,7 @@ if [ $userid -ne 0 ]; then
 fi
 log_folder="/var/log/shell-practice2"
 script_name=$( echo $0 | cut -d "." -f1 )
-log_file=$log_folder/$script_name
+log_file="$log_folder/$script_name.log"
 mkdir -p $log_folder
 checking(){
     if [ $1 -ne 0 ]; then  
