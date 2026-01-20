@@ -25,4 +25,5 @@ do
         validate $? "$package"
     else
         echo -e "$package is already installed...\e[32m SKIPPING \e[0m"
+    fi
 done
