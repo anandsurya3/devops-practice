@@ -10,10 +10,10 @@ log_file="$log_folder/$script_name"
 mkdir -p $log_folder
 validate(){
     if [ $1 -ne 0 ]; then
-        echo "installing $2 is failed"
+        echo "installing $2 is failed" | tee -a $log_file
         exit 1
     else
-        echo "installing $2 is success"
+        echo "installing $2 is success" | tee -a $log_file
     fi 
 }
 for packages in $@
