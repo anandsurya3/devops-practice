@@ -24,5 +24,5 @@ do
         dnf install $package &>>$log_file
         validate $? "$package"
     else
-    echo -e "$package is already installed...\e[32m SKIPPING \e[0m"
+        echo -e "$package is already installed...\e[32m SKIPPING \e[0m"
 done
