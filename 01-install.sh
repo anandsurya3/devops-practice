@@ -1,32 +1,23 @@
 #!/bin/bash
-userid=$(id -u)
+userid=$(id -U)
+echo $userid
 if [ $userid -ne 0 ]; then
-    echo -e "\e[31m ERROR please take access \e[0m"
+    echo "ERROR please take root access"
     exit 1
 fi
-log_folder="/var/log/shell-practice2"
-script_name=$( echo $0 | cut -d "." -f1 )
-log_file="$log_folder/$script_name.log"
+log_folder="/var/log/installed-packages"
+scripit_name=$( echo $0 | cut -d "." -f1 )
+log_file=$log_folder/$scripit_name
 mkdir -p $log_folder
-checking(){
-    if [ $1 -ne 0 ]; then  
-        echo "installing $2 is failed"
-        exit 1
+validate(){
+    if [ $1 - eq 0 ]; then
+        echo " installing $2 is success"
     else
-        echo "installing $2 is success"
+        echo " installing $2 is failed"
+        exit 1
     fi
 }
-dnf list installed mysql &>>$log_file
-if [ $? -ne 0 ]; then
-    dnf install mysql -y &>>$log_file
-    checking $? "mysql"
-else 
-    echo "mysql is already installed....SKIPPING"
-fi
-dnf list installed nginx &>>$log_file
-if [ $? -ne 0 ]; then
-    dnf install nginx -y &>>$log_file
-    checking $? "nginx"
-else
-    echo "nginx is already installed....SKIPPING"
-fi
+for package in $@
+do
+echo package is : $package
+done
