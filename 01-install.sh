@@ -10,7 +10,7 @@ scripit_name=$( echo $0 | cut -d "." -f1 )
 log_file=$log_folder/$scripit_name
 mkdir -p $log_folder
 validate(){
-    if [ $1 - eq 0 ]; then
+    if [ $1 -eq 0 ]; then
         echo " installing $2 is success"
     else
         echo " installing $2 is failed"
@@ -21,7 +21,7 @@ for package in $@
 do
     dnf list installed $package &>>$log_fie
     if [ $? -ne 0 ]; then
-        dnf install $package &>>$log_file
+        dnf install $package -y &>>$log_file
         validate $? "$package"
     else
         echo -e "$package is already installed...\e[32m SKIPPING \e[0m"
