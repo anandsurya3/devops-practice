@@ -1,5 +1,5 @@
 #!/bin/bash
-userid=$(id -U)
+userid=$(id -u)
 echo $userid
 if [ $userid -ne 0 ]; then
     echo "ERROR please take root access"
