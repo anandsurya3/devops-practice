@@ -19,10 +19,10 @@ validate(){
 }
 for package in $@
 do
-dnf list installed $package &>>$log_fie
-if [ $? -ne 0 ]; then
-    dnf install $package &>>$log_file
-    validate $? "$package"
-else
+    dnf list installed $package &>>$log_fie
+    if [ $? -ne 0 ]; then
+        dnf install $package &>>$log_file
+        validate $? "$package"
+    else
     echo -e "$package is already installed...\e[32m SKIPPING \e[0m"
 done
