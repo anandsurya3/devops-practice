@@ -7,7 +7,7 @@ if [ $userid -ne 0 ]; then
 fi
 log_folder="/var/log/installed-packages"
 scripit_name=$( echo $0 | cut -d "." -f1 )
-log_file=$log_folder/$scripit_name
+log_file="$log_folder/$scripit_name.log"
 mkdir -p $log_folder
 validate(){
     if [ $1 -eq 0 ]; then
