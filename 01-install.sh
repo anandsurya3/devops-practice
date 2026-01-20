@@ -1,29 +1,34 @@
 #!/bin/bash
+
 userid=$(id -u)
-echo $userid
-if [ $userid -ne 0 ]; then
-    echo "ERROR please take root access"
+if [ "$userid" -ne 0 ]; then
+    echo "ERROR: please take root access"
     exit 1
 fi
+
 log_folder="/var/log/installed-packages"
-scripit_name=$( echo $0 | cut -d "." -f1 )
-log_file="$log_folder/$scripit_name.log"
-mkdir -p $log_folder
-validate(){
-    if [ $1 -eq 0 ]; then
-        echo " installing $2 is success"
+script_name=$(basename "$0" .sh)
+log_file="$log_folder/$script_name.log"
+
+mkdir -p "$log_folder"
+
+validate() {
+    if [ "$1" -eq 0 ]; then
+        echo "Installing $2 SUCCESS" | tee -a "$log_file"
     else
-        echo " installing $2 is failed"
+        echo "Installing $2 FAILED" | tee -a "$log_file"
         exit 1
     fi
 }
-for package in $@
+
+for package in "$@"
 do
-    dnf list installed $package &>>$log_fie
+    dnf list installed "$package" &>>"$log_file"
     if [ $? -ne 0 ]; then
-        dnf install $package -y &>>$log_file
+        echo "Installing $package..." | tee -a "$log_file"
+        dnf install -y "$package" &>>"$log_file"
         validate $? "$package"
     else
-        echo -e "$package is already installed...\e[32m SKIPPING \e[0m"
+        echo "$package already installed — SKIPPING" | tee -a "$log_file"
     fi
 done
