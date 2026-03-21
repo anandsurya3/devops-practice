@@ -1,0 +1,1 @@
+aws ec2 run-instances --image-id ami-0220d79f3f480ecf5 --instance-type t3.micro  --security-group-ids sg-04ed9a90b34bd15be --tag-specifications 'ResourceType=instance,Tags=[{Key=Name,Value=instance-name}]' --query 'Instances[0].InstanceId' --output text
