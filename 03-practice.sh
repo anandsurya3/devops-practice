@@ -1,18 +1,12 @@
-#!/bin/bash
-userid=$(id -u)
-if [ $userid -ne 0 ]; then
-    echo "ERROR...plsease take root access"
-    exit 1
-fi
-checking(){
-    if [ $1 -ne 0 ]; then
-        echo "installing $2 failed"
-        exit 1
+AMI_ID=$(ami-0220d79f3f480ecf5)
+SG_ID=$(sg-04ed9a90b34bd15be)
+for $instances in $@
+do
+    INSTANCE_ID=$(aws ec2 run-instances --image-id $AMI_ID --instance-type t3.micro --security-group-ids $SG_ID --tag-specifications 'ResourceType=instance,Tags=[{Key=Name,Value=$instances}]' --query 'Instances[0].InstanceId' --output text)
+    if [ $instances != frontend ]; then
+        ip=$(aws ec2 describe-instances --instance-ids $INSTANCE_ID --query 'Reservations[*].Instances[*].PublicIpAddress' --output text)
     else
-        echo "installing $2 success"
-    fi 
-}
-dnf install mysql -y
-checking $? "mysql"
-dnf install nginx -y
-checking $? "nginx"
+        ip=$(aws ec2 describe-instances --instance-ids $INSTANCE_ID --query 'Reservations[*].Instances[*].PrivateIpAddress' --output text)
+    fi
+done
+echo "$instances :: $ip"
