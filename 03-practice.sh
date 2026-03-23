@@ -9,4 +9,4 @@ do
         ip=$(aws ec2 describe-instances --instance-ids $INSTANCE_ID --query 'Reservations[*].Instances[*].PrivateIpAddress' --output text)
     fi
 done
-echo "$instance:$ip"
+echo "$instance: $ip"
