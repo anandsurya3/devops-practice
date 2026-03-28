@@ -12,9 +12,9 @@ G="\e[32m"
 W="\e[0m"
 validate(){
     if [ $1 -ne 0 ]; then
-        echo -e "$2...$R FIALED $W" | tee -a $log_folder
+        echo -e "$2...$R FIALED $W" | tee -a $log_file
     else
-        echo -e "$2...$G SUCCESS $W" | tee -a $log_folder
+        echo -e "$2...$G SUCCESS $W" | tee -a $log_file
     fi
 }
 cp rabbitmq.repo /etc/yum.repos.d/rabbitmq.repo &>>$log_file
