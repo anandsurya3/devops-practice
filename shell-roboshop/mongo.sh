@@ -7,7 +7,7 @@ R="\e[31m"
 G="\e[32m"
 W="\3[0m"
 logs_folder="/var/log/shell-roboshop"
-script_name="$( echo $0 | cut -d ".' -f1 )"
+script_name=$( echo $0 | cut -d ".' -f1 )
 log_file="$logs_folder/$script_name.log"
 mkdir -p $logs_folder
 validate(){
@@ -27,4 +27,4 @@ validate $? "start mongodb"
 sed -i 's/127.0.0.1/0.0.0.0/g' /etc/mongod.conf
 validate $? "allowing connections"
 systemctl restart mongod
-validate "restarting mongodb"
+validate $? "restarting mongodb"
