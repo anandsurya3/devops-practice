@@ -18,15 +18,15 @@ validate(){
         echo -e "$2...$G SUCCESS $W" | tee -a $log_file
     fi
 }
-dnf module disable nodejs -y &>>$log_folder
+dnf module disable nodejs -y &>>$log_file
 validate $? "disabling nodejs"
-dnf module enable nodejs:20 -y &>>$log_folder
+dnf module enable nodejs:20 -y &>>$log_file
 validate $? "enabling nodejs"
-dnf install nodejs -y &>>$log_folder
+dnf install nodejs -y &>>$log_file
 validate $? "installing nodejs"
-id roboshop &>>$log_folder
+id roboshop &>>$log_file
 if [ $? -ne 0 ]; then
-    useradd --system --home /app --shell /sbin/nologin --comment "robosho system user" roboshop &>>$log_folder
+    useradd --system --home /app --shell /sbin/nologin --comment "robosho system user" roboshop &>>$log_file
     validate $? "adding system user"
 else
     echo -e "user already exist...$G SKIPPING $W"
@@ -39,15 +39,15 @@ cd /app
 validate $? "changing to /app directory"
 rm -rf /app/*
 validate $? "removing existing code"
-unzip /tmp/cart.zip &>>$log_folder
+unzip /tmp/cart.zip &>>$log_file
 validate $? "unziping the code"
-npm install &>>$log_folder
+npm install &>>$log_file
 validate $? "installing dependencies"
-cp $SCRIPT_DIR/cart.service /etc/systemd/system/cart.service &>>$log_folder
+cp $SCRIPT_DIR/cart.service /etc/systemd/system/cart.service &>>$log_file
 validate $? "creating systemctl service"
 systemctl restart cart
 validate $? "restarting cart"
-systemctl enable cart &>>$log_folder
+systemctl enable cart &>>$log_file
 validate $? "enabling the cart"
 systemctl start cart
 validate $? "starting the cart"
