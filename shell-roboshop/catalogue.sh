@@ -10,6 +10,7 @@ log_folder="/var/lod/shell-roboshop"
 script_name=$( echo $0 | cut -d "." -f1 )
 log_file="$log_folder/$script_name.log"
 mkdir -p $log_folder
+dir=$PWD
 validate(){
     if [ $1 -ne 0 ]; then
         echo -e "$2...$R FAILED $W" | tee -a $log_file
@@ -42,7 +43,7 @@ unzip /tmp/catalogue.zip &>>$log_file
 validate $? "unzip the code"
 npm install &>>$log_file
 validate $? "installing dependencies"
-cp PWD/catalogue.service /etc/systemd/system.catalogue.service &>>$log_file
+cp $dir/catalogue.service /etc/systemd/system.catalogue.service &>>$log_file
 validate $? "creating systemctl services"
 systemctl daemon-reload
 validate $? "daemon-reloading"
@@ -50,7 +51,7 @@ systemctl enable catalogue &>>$log_file
 validate $? "enabling catalogue"
 systemctl start catalogue
 validate $? "starting catalogue"
-cp PWD/mongo.repo /etc/mongo.repos.d/mongo.repo
+cp $dir/mongo.repo /etc/mongo.repos.d/mongo.repo
 dnf install mongodb-mongosh -y &>>$log_file
 validate $? "installing mongodb client"
 index=$(mongosh mongodb.daws86s.fun --quiet --eval "db.getMongo().getDBNames().indexOf('catalogue')") &>>$log_file
