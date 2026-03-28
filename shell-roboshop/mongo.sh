@@ -13,15 +13,15 @@ log_file="$logs_folder/$script_name.log"
 mkdir -p $logs_folder
 validate(){
     if [ $1 -ne 0 ]; then
-        echo -e "$2...$R FAIL $W" | tee -a $log_file
+        echo -e "$2...$R FAIL $W"
     else
-        echo -e "$2...$G SUCCESS $W" | tee -a $log_file
+        echo -e "$2...$G SUCCESS $W"
     fi
 }
-cp mongo.repo /etc/yum.repos.d/mongo.repo &>>$log_file
-dnf install mongo-org -y &>>$logfile
+cp mongo.repo /etc/yum.repos.d/mongo.repo 
+dnf install mongo-org -y
 validate $? "installing mongodb"
-systemctl enable mongod &>>$logfile
+systemctl enable mongod 
 validate $? "enable mongodb"
 systemctl start mongod
 validate $? "start mongodb"
