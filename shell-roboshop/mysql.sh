@@ -20,9 +20,9 @@ validate(){
 }
 dnf install mysql-server -y &>>$log_file
 validate $? "installing mysql-server -y"
-systemctl enable mysql
+systemctl enable mysqld
 validate $? "enabling mysql" &>>$log_file
-systemctl start mysql
+systemctl start mysqld
 validate $? "starting mysql"
 mysql_secure_installation --set-root-pass surya123
 validate $? "setup mysql password"
