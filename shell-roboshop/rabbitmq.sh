@@ -6,6 +6,7 @@ fi
 log_folder="/var/log/shell-robosho"
 script_name=$( echo $0 | cut -d "." -f1 )
 log_file="$log_folder/$script_name"
+mkdir -p $log_folder
 R="\e[31m"
 G="\e[32m"
 W="\e[0m"
