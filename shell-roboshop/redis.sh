@@ -32,4 +32,4 @@ systemctl start redis
 validate $? "starting redis"
 end_time=$(date +%s)
 total_time=$(( $end_time - $start_time ))
-echo "script executed total time :: $total_time
+echo "script executed total time :: $total_time"
