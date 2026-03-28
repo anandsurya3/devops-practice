@@ -54,7 +54,7 @@ validate $? "starting catalogue"
 cp $SCRIPT_DIR/mongo.repo /etc/yum.repos.d/mongo.repo
 dnf install mongodb-mongosh -y &>>$log_file
 validate $? "installing mongodb client"
-index=$(mongosh mongodb.daws86s.fun --quiet --eval "db.getMongo().getDBNames().indexOf('catalogue')") &>>$log_file
+index=$(mongosh mongodb.anandsurya.online --quiet --eval "db.getMongo().getDBNames().indexOf('catalogue')") &>>$log_file
 if [ $index -le 0 ]; then
     mongosh --host mongodb.anandsurya.online </app/db/master-data.js &>>$log_file
     validate $? "load the db"
