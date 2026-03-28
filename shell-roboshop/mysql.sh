@@ -19,7 +19,7 @@ validate(){
 
 }
 dnf install mysql-server -y &>>$log_file
-validate $? "installing mysql server"
+validate $? "installing mysql-server -y"
 systemctl enable mysql
 validate $? "enabling mysql" &>>$log_file
 systemctl start mysql
