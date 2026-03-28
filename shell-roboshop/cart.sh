@@ -31,7 +31,7 @@ if [ $? -ne 0 ]; then
 else
     echo -e "user already exist...$G SKIPPING $W"
 fi
-mkdir /app
+mkdir -p /app
 validate $? "making app directory"
 curl -L -o /tmp/cart.zip https://roboshop-artifacts.s3.amazonaws.com/cart-v3.zip
 validate $? "downloading the code"
