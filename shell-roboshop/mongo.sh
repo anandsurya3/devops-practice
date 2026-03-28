@@ -3,7 +3,7 @@ R="\e[31m"
 G="\e[32m"
 W="\e[0m"
 if [ $userid -ne 0 ]; then
-    echo"ERROR...take root access"
+    echo "ERROR...take root access"
     exit 1
 fi
 
@@ -13,15 +13,15 @@ log_file="$logs_folder/$script_name.log"
 mkdir -p $logs_folder
 validate(){
     if [ $1 -ne 0 ]; then
-        echo -e "$2...$R FAIL $W"
+        echo -e "$2...$R FAIL $W" | tee -a $log_file
     else
-        echo -e "$2...$G SUCCESS $W"
+        echo -e "$2...$G SUCCESS $W" | tee -a $log_file
     fi
 }
-cp mongo.repo /etc/yum.repos.d/mongo.repo 
-dnf install mongo-org -y
+cp mongo.repo /etc/yum.repos.d/mongo.repo &>>$log_file
+dnf install mongodb-org -y &>>$log_file
 validate $? "installing mongodb"
-systemctl enable mongod 
+systemctl enable mongod &>>$log_file
 validate $? "enable mongodb"
 systemctl start mongod
 validate $? "start mongodb"
