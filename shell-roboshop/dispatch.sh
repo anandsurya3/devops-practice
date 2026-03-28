@@ -28,7 +28,7 @@ else
     echo -e "user already exist...$G SKIPPING $W"
 fi
 mkdir -p /app
-vaidate $? "creating /app directory"
+validate $? "creating /app directory"
 curl -L -o /tmp/dispatch.zip https://roboshop-artifacts.s3.amazonaws.com/dispatch-v3.zip &>>$log_file
 validate $? "downloading the code"
 cd /app
