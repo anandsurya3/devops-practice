@@ -1,88 +1,65 @@
-#!/bin/bash
-
-USERID=$(id -u)
+userid=$(id -u)
+if [ $userid -ne 0 ]; then
+    echo "ERROR...please take root access"
+    exit 1
+fi
 R="\e[31m"
 G="\e[32m"
-Y="\e[33m"
-N="\e[0m"
-
-LOGS_FOLDER="/var/log/shell-roboshop"
-SCRIPT_NAME=$( echo $0 | cut -d "." -f1 )
+W="\e[0m"
+log_folder="/var/lod/shell-roboshop"
+script_name=$( echo $0 | cut -d "." -f1 )
+log_file="$log_folder/$script_name.log"
+mkdir -p $log_folder
 SCRIPT_DIR=$PWD
-MONGODB_HOST=mongodb.anandsurya.online
-LOG_FILE="$LOGS_FOLDER/$SCRIPT_NAME.log" # /var/log/shell-script/16-logs.log
-
-mkdir -p $LOGS_FOLDER
-echo "Script started executed at: $(date)" | tee -a $LOG_FILE
-
-if [ $USERID -ne 0 ]; then
-    echo "ERROR:: Please run this script with root privelege"
-    exit 1 # failure is other than 0
-fi
-
-VALIDATE(){ # functions receive inputs through args just like shell script args
+validate(){
     if [ $1 -ne 0 ]; then
-        echo -e "$2 ... $R FAILURE $N" | tee -a $LOG_FILE
-        exit 1
+        echo -e "$2...$R FAILED $W" | tee -a $log_file
     else
-        echo -e "$2 ... $G SUCCESS $N" | tee -a $LOG_FILE
+        echo -e "$2...$G SUCCESS $W" | tee -a $log_file
     fi
 }
-
-##### NodeJS ####
-dnf module disable nodejs -y &>>$LOG_FILE
-VALIDATE $? "Disabling NodeJS"
-dnf module enable nodejs:20 -y  &>>$LOG_FILE
-VALIDATE $? "Enabling NodeJS 20"
-dnf install nodejs -y &>>$LOG_FILE
-VALIDATE $? "Installing NodeJS"
-
-id roboshop &>>$LOG_FILE
+dnf module disable nodejs -y &>>$log_file
+validate $? "disabeling nodejs"
+dnf module enable nodejs:20 -y &>>$log_file
+validate $? "enabling nodejs:20" 
+dnf install nodejs -y &>>$log_file
+validate $? "installing nodejs"
+id roboshop &>>$log_file
 if [ $? -ne 0 ]; then
-    useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop &>>$LOG_FILE
-    VALIDATE $? "Creating system user"
+    useradd --system --home /app --shell /sbin/nologin/ --comment "roboshop system user" roboshop
+    validate $? "adding system user"
 else
-    echo -e "User already exist ... $Y SKIPPING $N"
+    echo -e "user already exist...$G SKIPPING $W"
 fi
-
 mkdir -p /app
-VALIDATE $? "Creating app directory"
-
-curl -o /tmp/catalogue.zip https://roboshop-artifacts.s3.amazonaws.com/catalogue-v3.zip &>>$LOG_FILE
-VALIDATE $? "Downloading catalogue application"
-
-cd /app 
-VALIDATE $? "Changing to app directory"
-
+validate $? "creating /app directory"
+curl -o /tmp/catalogue.zip https://roboshop-artifacts.s3.amazonaws.com/catalogue-v3.zip &>>$log_file
+validate $? "downloading the code"
+cd /app
+validate $? "changing the /app directory"
 rm -rf /app/*
-VALIDATE $? "Removing existing code"
-
-unzip /tmp/catalogue.zip &>>$LOG_FILE
-VALIDATE $? "unzip catalogue"
-
-npm install &>>$LOG_FILE
-VALIDATE $? "Install dependencies"
-
-cp $SCRIPT_DIR/catalogue.service /etc/systemd/system/catalogue.service
-VALIDATE $? "Copy systemctl service"
-
+validate $? "Removing exist code"
+unzip /tmp/catalogue.zip &>>$log_file
+validate $? "unzip the code"
+npm install &>>$log_file
+validate $? "installing dependencies"
+cp $SCRIPT_DIR/catalogue.service /etc/systemd/system/catalogue.service &>>$log_file
+validate $? "creating systemctl services"
 systemctl daemon-reload
-systemctl enable catalogue &>>$LOG_FILE
-VALIDATE $? "Enable catalogue"
-
+validate $? "daemon-reloading"
+systemctl enable catalogue &>>$log_file
+validate $? "enabling catalogue"
+systemctl start catalogue
+validate $? "starting catalogue"
 cp $SCRIPT_DIR/mongo.repo /etc/yum.repos.d/mongo.repo
-VALIDATE $? "Copy mongo repo"
-
-dnf install mongodb-mongosh -y &>>$LOG_FILE
-VALIDATE $? "Install MongoDB client"
-
-INDEX=$(mongosh mongodb.daws86s.fun --quiet --eval "db.getMongo().getDBNames().indexOf('catalogue')")
-if [ $INDEX -le 0 ]; then
-    mongosh --host $MONGODB_HOST </app/db/master-data.js &>>$LOG_FILE
-    VALIDATE $? "Load catalogue products"
+dnf install mongodb-mongosh -y &>>$log_file
+validate $? "installing mongodb client"
+index=$(mongosh mongodb.daws86s.fun --quiet --eval "db.getMongo().getDBNames().indexOf('catalogue')") &>>$log_file
+if [ $index -le 0 ]; then
+    mongosh --host mongodb.anandsurya.online </app/db/master-data.js &>>$log_file
+    validate $? "load the db"
 else
-    echo -e "Catalogue products already loaded ... $Y SKIPPING $N"
+    echo -e "db already loaded...$G SKIPPING $W"
 fi
-
 systemctl restart catalogue
-VALIDATE $? "Restarted catalogue"
+validate $? "restarting catalogue"
