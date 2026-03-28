@@ -18,36 +18,38 @@ validate(){
         echo -e "$2...$G SUCCESS $W" | tee -a $log_file
     fi
 }
-dnf module disable nodejs -y &>>$log_folder
+dnf module disable nodejs -y &>>$log_file
 validate $? "disabling nodejs"
-dnf module enable nodejs:20 -y &>>$log_folder
+dnf module enable nodejs:20 -y &>>$log_file
 validate $? "enabling nodejs"
-dnf install nodejs -y &>>$log_folder
+dnf install nodejs -y &>>$log_file
 validate $? "installing nodejs"
-id roboshop &>>$log_folder
+id roboshop &>>$log_file
 if [ $? -ne 0 ]; then
-    useradd --system --home /app --shell /sbin/nologin --comment "robosho system user" roboshop &>>$log_folder
+    useradd --system --home /app --shell /sbin/nologin --comment "robosho system user" roboshop &>>$log_file
     validate $? "adding system user"
 else
     echo -e "user already exist...$G SKIPPING $W"
 fi
 mkdir /app
 validate $? "making app directory"
-curl -L -o /tmp/user.zip https://roboshop-artifacts.s3.amazonaws.com/user-v3.zip &>>$log_folder
+curl -L -o /tmp/user.zip https://roboshop-artifacts.s3.amazonaws.com/user-v3.zip &>>$log_file
 validate $? "downloading the code"
 cd /app
 validate $? "changing to /app directory"
 rm -rf /app/*
 validate $? "removing existing code"
-unzip /tmp/user.zip &>>$log_folder
+unzip /tmp/user.zip &>>$log_file
 validate $? "unziping the code"
-npm install &>>$log_folder
+npm install &>>$log_file
 validate $? "installing dependencies"
-cp $SCRIPT_DIR/user.service /etc/systemd/system/user.service &>>$log_folder
+cp $SCRIPT_DIR/user.service /etc/systemd/system/user.service &>>$log_file
 validate $? "creating systemctl service"
+systemctl daemon-reload
+validate $? "daemon-reloading"
 systemctl restart user
 validate $? "restarting user"
-systemctl enable user &>>$log_folder
+systemctl enable user &>>$log_file
 validate $? "enabling the user"
 systemctl start user
 validate $? "starting the user"
