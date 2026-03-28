@@ -17,7 +17,8 @@ validate(){
     else
         echo -e "$2...$G SUCCESS $W" | tee -a $log_file
     fi
-}dnf module disable nginx -y &>>$log_file
+}
+dnf module disable nginx -y &>>$log_file
 validate $? "disabling nginx"
 dnf module enable nginx:1.24 -y &>>$log_file
 validate $? "enabling nginx 1.24"
