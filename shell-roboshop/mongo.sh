@@ -1,7 +1,7 @@
 userid=$(id -u)
 R="\e[31m"
 G="\e[32m"
-W="\3[0m"
+W="\e[0m"
 if [ $userid -ne 0 ]; then
     echo"ERROR...take root access"
     exit 1
