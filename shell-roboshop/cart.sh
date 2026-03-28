@@ -33,7 +33,7 @@ else
 fi
 mkdir -p /app
 validate $? "making app directory"
-curl -L -o /tmp/cart.zip https://roboshop-artifacts.s3.amazonaws.com/cart-v3.zip
+curl -L -o /tmp/cart.zip https://roboshop-artifacts.s3.amazonaws.com/cart-v3.zip &>>$log_file
 validate $? "downloading the code"
 cd /app
 validate $? "changing to /app directory"
@@ -45,6 +45,8 @@ npm install &>>$log_file
 validate $? "installing dependencies"
 cp $SCRIPT_DIR/cart.service /etc/systemd/system/cart.service &>>$log_file
 validate $? "creating systemctl service"
+systemctl daemon-reload
+validate $? "daemon-realoding"
 systemctl restart cart
 validate $? "restarting cart"
 systemctl enable cart &>>$log_file
